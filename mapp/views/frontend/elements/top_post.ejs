@@ -1,0 +1,58 @@
+
+ <!-- <h3><%= JSON.stringify(itemsCategory) %></h3> -->
+ <!--đây là phần định nghĩa sử dụng cho toàn bộ-->
+<%
+     const collection = 'article';
+     //console.log(collection)
+     const linkPrefix   = systemConfig.prefixAdmin + `/${collection}/`;
+     const forderImage = '/uploads/article/';
+                            
+%> 
+
+<div class="container no-padding">
+    <div class="row small-gutters">
+        <div class="col-lg-8 top-post-left">
+            <div class="feature-image-thumb relative">
+                <div class="overlay overlay-bg"></div>
+                <img class="img-fluid top_post_1" src="<%= forderImage +itemsSpecial[0].thumb %>" alt="">
+            </div>
+            <div class="top-post-details">
+                <ul class="tags">
+                    <li><a href="#"><%= itemsSpecial[0].category.name%></a></li>
+                </ul>
+                <a href="article/<%= itemsSpecial[0].id %>">
+                    <h3><%= itemsSpecial[0].name %>.</h3>
+                </a>
+                <ul class="meta">
+                    <li><a href="#"><span class="lnr lnr-user"></span><%=itemsSpecial[0].created.user_name %></a></li>
+                    <li><a href="#"><span class="lnr lnr-calendar-full"></span><%= moment(itemsSpecial[0].created.time).format(systemConfig.format_short_time) %></a></li>
+                    <li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
+                </ul>
+            </div>
+        </div>
+       
+        <div class="col-lg-4 top-post-right">
+            <% for(var i = 1; i< itemsSpecial.length; i++){ %>
+                <div class="single-top-post <%= (i==1)? '': 'mt-10'%> ">
+                    <div class="feature-image-thumb relative">
+                        <div class="overlay overlay-bg"></div>
+                        <img class="img-fluid top_post_2" src="<%= forderImage +itemsSpecial[i].thumb %>" alt="">
+                    </div>
+                    <div class="top-post-details">
+                        <ul class="tags">
+                            <li><a href="#"><%= itemsSpecial[i].category.name %></a></li>
+                        </ul>
+                        <a href="article/<%= itemsSpecial[i].id %>">
+                            <h4><%= itemsSpecial[i].name %>.</h4>
+                        </a>
+                        <ul class="meta">
+                            <li><a href="#"><span class="lnr lnr-user"></span><%=itemsSpecial[i].created.user_name %></a></li>
+                            <li><a href="#"><span class="lnr lnr-calendar-full"></span><%= moment(itemsSpecial[i].created.time).format(systemConfig.format_short_time) %></a></li>
+                            <li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
+                        </ul>
+                    </div>
+                </div>
+            <%}%>            
+        </div>
+    </div>
+</div>

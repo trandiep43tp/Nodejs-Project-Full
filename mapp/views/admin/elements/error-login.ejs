@@ -1,0 +1,15 @@
+<% if(errors){ %>
+    <div class="alert alert-danger" role="alert">       
+            <% errors.forEach ((error, index)=>{ 
+                var arrWord = error.param.split("_");
+                var sttWord = '';
+                arrWord.forEach((word)=> {
+                    sttWord += word.charAt(0).toUpperCase() + word.slice(1) + " ";
+                });
+            %> 
+                <li><b><%= sttWord %></b>: <%=error.msg %></li>
+                
+            <% })%>
+        
+    </div>
+<%}%>

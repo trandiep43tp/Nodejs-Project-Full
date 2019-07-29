@@ -1,0 +1,12 @@
+<% 
+    sourceByHelper = (user_name, time) =>{ 
+        if(user_name === undefined ) return ''
+        
+        let xhtml = '';
+            xhtml = `<span class="glyphicon glyphicon-user "></span> ${user_name} </br>
+                     <span class="glyphicon glyphicon-time "></span> ${moment(time).format(systemConfig.format_long_time)}`
+
+        return xhtml;
+    }
+ %>
+       

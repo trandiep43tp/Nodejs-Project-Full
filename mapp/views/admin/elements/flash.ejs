@@ -1,0 +1,16 @@
+
+ <!-- <h3><%= JSON.stringify(messages) %></h3> -->
+
+<% Object.keys(messages).forEach((type) => { %>
+    <!-- <h3><%= JSON.stringify(type) %></h3> -->
+    <div class="alert alert-<%= (type) ==='error'? 'danger' : type %>" role="alert">     
+       <% messages[type].forEach((message) => { %>
+             <span class="close-btn">&times;</span> <%= message %>
+        <% }) %>
+    </div>
+<% }) %>
+
+
+
+
+

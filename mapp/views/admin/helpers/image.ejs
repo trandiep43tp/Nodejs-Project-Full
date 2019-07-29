@@ -1,0 +1,9 @@
+<% 
+    imageHelper = (forder, imageName='', alt = '') =>{                
+        if( imageName == null || imageName == '' ){
+            imageName = 'noavatar.jpg'
+        }
+        return ` <img class="img-responsive img-avatar" src="${forder + imageName}" alt="${alt}" />`
+    }
+ %>
+       

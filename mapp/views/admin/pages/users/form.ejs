@@ -1,0 +1,86 @@
+<h3><%=JSON.stringify(errors) %></h3>
+ <!--đây là phần định nghĩa sử dụng cho toàn bộ-->
+ <%
+    include ../../helpers/formErrors ;
+    include ../../helpers/select-item; 
+    include ../../helpers/image;
+%>
+
+<%   
+    const collection = 'users'; 
+    const linkPrefix = systemConfig.prefixAdmin + `/${collection}/`;
+    const forderUpload = '/uploads/users/';
+%>
+
+<div class="row">
+    <div class="col-lg-12">
+    <div class="panel panel-default"> 
+    <div class="panel-heading">
+        Form 
+    </div> 
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-6">
+                 <%- formErrors(errors) %>                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <form role="form" action="<%= linkPrefix %>save" method="POST" enctype="multipart/form-data" name = "form_upload">              
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input class="form-control" name="name" value="<%=item.name %>" >
+                    </div>
+                    <div class="form-group">                        
+                        <div class="row">
+                            <div  class="col-lg-8">
+                                <label>File</label>
+                                <input  name="avatar" type="file">
+                            </div>
+                            <div  class="col-lg-4"> 
+                                <label>Image</label>
+                                <%- imageHelper(forderUpload, item.avatar, item.name ) %>
+                            </div>
+                        </div>            
+                    </div>                                       
+                    <div class="form-group">
+                        <label>Ordering</label>
+                        <input class="form-control" type="number" name="ordering" value="<%=item.ordering%>" >
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select name="status" class="form-control" >
+                            <option value="novalue">Choose Status</option>
+                            <option value="active" <%= (item.status == 'active')? 'selected = selected': '' %> > Active</option>
+                            <option value="inactive" <%= (item.status == 'inactive')? 'selected = selected': '' %> > Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Group</label>
+                        <select name="group_id" class="form-control" >
+                            <%-selectItemHelper(groupsItems, item.group.id )%>                           
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea class="form-control" name="content" rows="2"  id="content_ck123" ><%=item.content %></textarea>
+                    </div>                   
+                    <div class="form-group">
+                        <input class="form-control hidden" name="id" value="<%=item.id %>" > 
+                        <input class="form-control hidden" name="image_old" value="<%=item.avatar %>" > 
+                        <input class="form-control hidden" name="group_name" value="<%= item.group.name %>" >      
+                    </div> 
+                    <!-- <div class="form-group">
+                        <label>File</label>
+                        <input  name="avatar" type="file"  >
+                    </div>  -->
+                    <button type="submit" class="btn btn-primary">Submit </button>                                      
+                    <a type="button" href="<%= linkPrefix %>all" class="btn btn-default">Cancel</a>                   
+                </form>
+            </div>
+        </div>
+    </div> 
+
+    <script>
+        CKEDITOR.replace('content_ck123');
+    </script>

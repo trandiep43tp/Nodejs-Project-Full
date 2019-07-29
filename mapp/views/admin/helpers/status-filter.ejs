@@ -1,0 +1,17 @@
+
+ <% 
+    filterstatusHelper = (linkPrefix, statusFilter, query) =>{ 
+        let xhtml = '';
+        statusFilter.forEach((status, index)=>{
+            let link = linkPrefix + status.value;
+            if(query !== "" )  link += "?search=" + query;
+            xhtml += ` <a class="btn m-b-sm btn-${status.class} btn-sm" href="${link}">
+                             <b> ${status.name.toUpperCase()} ( ${status.count} ) </b>
+                       </a>`
+                
+        })
+        return xhtml;
+    }
+%> 
+
+   

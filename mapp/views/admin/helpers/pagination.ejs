@@ -1,0 +1,85 @@
+
+ <% paginationHelper = (linkPrefix, pagination, currentStatus, query) =>{
+
+    let totalItems        = pagination.totalItems;
+    let totalItemsperPage = pagination.totalItemsperPage;
+    let currentPage       = pagination.currentPage;
+    let totalPages        = Math.ceil(totalItems/totalItemsperPage);
+    let fromItem          = (currentPage -1)*totalItemsperPage + 1;
+    let toItem            = ((fromItem + totalItemsperPage -1)>=totalItems)? totalItems :(fromItem + totalItemsperPage -1) ;
+    let pageRanges        = pagination.pageRanges;
+
+    let link = linkPrefix + currentStatus;
+    if(query !== ''){
+        link += '?search='+ query + '&page=';
+    }else{
+        link += '?page=';
+    }
+
+    let xhtml = '';
+    let xhtmlStart    = '<li class=" disabled"><a>Start</a></li>';
+    let xhtmlPrevious = '<li class=" disabled"><a>Previous</a></li>';
+    let xhtmlPage = '';
+    let xhtmlNext     = '<li class=" disabled"><a>Next</a></li>';
+    let xhtmlEnd      = '<li class=" disabled"><a>End</a></li>';
+
+    if(currentPage > 1 ){
+        xhtmlStart =  `<li ><a href="${link}1">Start</a></li>`;
+        xhtmlPrevious = `<li class=""><a href="${link + (currentPage -1)}">Previous</a></li>`;
+    }
+    
+    if(currentPage < totalPages){
+        xhtmlNext     = `<li ><a href="${link +(currentPage + 1)}" >Next</a></li>`;
+        xhtmlEnd      = `<li ><a href="${link + totalPages}">End</a></li>`;
+    }
+
+    <!--viết giải thuật để không để số trang hiển thị quá nhiều -->
+   
+    let  middle = Math.ceil(pageRanges/2);
+    let  min = currentPage - middle + 1; <!-- cái này có được là do ta phân tích giải thuật-->
+    let  max = min + pageRanges - 1;
+    if( min <= 1 ){
+        min = 1;
+        max =  pageRanges ;
+    }
+    
+    if(max >= totalPages){
+        max = totalPages;
+        min = (max - pageRanges + 1) <= 1 ? 1: max - pageRanges + 1;
+    }
+   
+ 
+    for(let i = min; i<= max; i++){
+        if(i== currentPage){
+            xhtmlPage +=  `<li class="active" ><a href="#">${i}</a></li>`;
+        }else{
+        
+             xhtmlPage +=  `<li ><a href="${link + i}">${i}</a></li>`;
+        }       
+    }
+
+    xhtml = '<ul class="pagination text-center">'+ xhtmlStart + xhtmlPrevious + xhtmlPage + xhtmlNext + xhtmlEnd + '</ul>';
+
+    return `
+        <div class="panel panel-info" id="pagination">
+            <div class="panel-heading">
+                Pagination
+                <span></span>
+                <span class="label label-warning">Total pages: ${totalPages}</span>
+                <span class="label label-danger">Total entries: ${totalItems}</span>
+            </div>
+            <div class="panel-body">
+                <div class="infor-pagination">
+                    <p>Number of entries on the page: <span>${totalItemsperPage}</span></p>
+                    <p>Showing <span> ${fromItem} </span> to <span>${toItem}</span> of <span>${totalItems}</span> entries</p>
+                </div>
+                <div class="ad-pagination">                   
+                        ${xhtml}                     
+                    
+                </div>
+            </div>
+        </div>
+    `
+ } %> 
+
+  

@@ -1,0 +1,36 @@
+.mb-10 {
+    margin-bottom: 10px;
+  }
+
+  
+  img.top_post_1 {
+    width: auto;
+    height: 443px;
+  }
+
+  img.top_post_2 {
+    width: auto;
+    height: 216px;
+  }
+
+  img.random_post {
+    width: 100px;
+    height: 80px;
+  }
+
+  img.view_list {
+    width: 279px;
+    height: 190px;
+  }
+
+  img.view_post {
+    width: 710px;
+    height: 415px;
+  }
+
+  img.view_post_with_category {
+    width: 262px;
+    height: 180px;
+  }
+
+ 

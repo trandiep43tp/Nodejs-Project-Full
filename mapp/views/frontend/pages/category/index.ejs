@@ -1,0 +1,20 @@
+
+<!-- <h3><%= JSON.stringify(itemsCategory) %></h3> -->
+
+
+<div class="col-lg-8 post-list">
+    <!-- Start latest-post Area -->
+        
+
+        <% if(itemsCategory.view == 'thumb'){ %>
+            <% include view_thumb %>						
+        <% } %>	
+        
+        <% if(itemsCategory.view == 'list'){ %>
+            <% include view_list %>						
+        <% } %>	
+      
+
+   
+    <!-- End latest-post Area -->
+</div>

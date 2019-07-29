@@ -1,0 +1,14 @@
+
+ <% 
+    selectItemHelper = (selectedItems, optionSelected, name='') =>{ 
+        let xhtml = `<option value="novalue">Choose ${name}</option>`;        
+        selectedItems.forEach((item, index)=>{
+            let selected = (item.id == optionSelected)? 'selected = "selected"' : '';
+            xhtml += `<option value="${item.id}" ${selected }>${item.name}</option>`                
+        })
+        return xhtml;
+    }
+%> 
+
+    
+ 

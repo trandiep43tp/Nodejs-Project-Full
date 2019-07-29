@@ -1,0 +1,138 @@
+  <!-- <h3><%= JSON.stringify(items) %></h3> -->
+   <% include ../../helpers/status-filter %>
+   <% include ../../helpers/action %>
+   <% include ../../helpers/status %>  
+   <% include ../../helpers/pagination %>
+   <% include ../../helpers/source-by %>
+   <% include ../../helpers/sort %>
+   <% include ../../helpers/select-item %>
+   <% include ../../helpers/image %>
+    <!--đây là phần định nghĩa sử dụng cho toàn bộ-->
+   <%
+        const collection = 'users';
+        //console.log(collection)
+        const linkPrefix   = systemConfig.prefixAdmin + `/${collection}/`;
+        const forderUpload = '/uploads/users/';
+                               
+   %>
+
+   <!--Kéo vào câu thông báo-->
+   <% include ../../elements/flash %>
+   <!-- <%- locals.flash %> -->
+   <!-- <div class="alert alert-success" role="alert">            
+        <span class="close-btn">&times;</span> 
+        Thay đổi Status thành công 
+    </div> -->
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Search & Filter 
+                    <a href="<%= linkPrefix %>all">
+                    <span id="icon-reload" class="glyphicon glyphicon-refresh"></span>
+                    </a> 
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="status-list col-sm-6 pl0">
+                            <!--Kéo hàm vào-->                            
+                               <%- filterstatusHelper(linkPrefix, statusFilter, query) %>                         
+                        </div>                           
+                        <div class="status-list col-sm-2 pl0">
+                            <!-- khi select được nhấn thì sẽ chạy java scrip trong file custom.js-->
+                            <select name="select_box_group" class="form-control" >
+                                <%-selectItemHelper(groupsItems, groupId, 'Group' )%>                           
+                            </select>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                            <form action="<%= linkPrefix %><%=currentStatus %>" method="GET">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search for..." value="<%= query %>">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info" type="submit">Search </button>
+                                    </span> 
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button">
+                                            <a href="<%= linkPrefix %><%=currentStatus %>">Clear</a>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    List users
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body"> 
+                    <form role="form" class="form-inline zt-form" id="zt-form" action="" method="post">                       
+                        <%- actionHelper(linkPrefix) %> 
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" class="cbAll" >
+                                        </th>
+                                        <th>#</th>
+                                        <%- sortHelper(linkPrefix, 'Name', 'name', sort_field, sort_type, 'width: 15%; color:red') %> 
+                                        <th>Avatar</th>
+                                        <%- sortHelper(linkPrefix, 'Status', 'status', sort_field, sort_type) %> 
+                                        <%- sortHelper(linkPrefix, 'Ordering', 'ordering', sort_field, sort_type) %> 
+                                        <%- sortHelper(linkPrefix, 'Group', 'group', sort_field, sort_type) %> 
+                                        <th>Created</th>
+                                        <th>Modified</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                      
+                                    <%if(items.length >0 ){%>             
+                                        <% items.forEach((item, index)=>{ %>                                       
+                                            <tr>
+                                                <td><input type="checkbox" name="cid" value="<%=item.id %>" /></td>
+                                                <td> <%= index+1 %> </td>
+                                                <td> <%=item.name %> </td>
+                                                <td>
+                                                    <%- imageHelper(forderUpload, item.avatar, item.name ) %>                                          
+                                                </td>
+                                                <td>
+                                                    <%- statusHelper(linkPrefix, item.id, item.status) %>  <!--Cách kéo hàm vào -->                                                                                                                                              
+                                                </td>
+                                                <td><input type="number" value="<%=item.ordering %>" class="text-center ordering"></td>
+                                                <td> <%=item.group.name %> </td>
+                                                <td>
+                                                    <%-sourceByHelper(item.created.user_name, item.created.time) %>                                               
+                                                </td>
+                                                <td>
+                                                    <%-sourceByHelper(item.modified.user_name, item.modified.time) %>                                              
+                                                </td>                                                                                      
+                                                <td>
+                                                    <a href="<%= linkPrefix %>form/edit/<%=item.id%>" type="button" class="btn btn-warning btn-sm">Edit</a>
+                                                    <a href="<%= linkPrefix %>delete/<%=item.id%>" type="button" class="btn btn-danger btn-sm btn-delete">Delete </a>
+                                                </td>
+                                            </tr>  
+                                        <% }) %> 
+                                    <%}else{%>
+                                        <tr><td colspan="9"><h3>Không có dữ liệu</h3></td></tr>
+                                    <%}%>                                                      
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">           
+            <%- paginationHelper(linkPrefix, pagination, currentStatus, query) %> 
+            
+        </div>
+    </div>
+    </div>    
+    </div>

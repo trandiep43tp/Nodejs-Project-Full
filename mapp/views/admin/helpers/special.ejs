@@ -1,0 +1,15 @@
+<% 
+    specialHelper = (linkPrefix, id, status) =>{ 
+        let link = linkPrefix + 'change-special/'+ id +'/' + status;
+        
+        let xhtml = '';
+        if( status ==="nomal" ){
+            xhtml = '<span class="label label-success">Nomal</span>';
+        }else if( status ==="top_post" ){
+            xhtml = '<span class="label label-warning">Top Post</span>';
+        }
+
+        return `<a href="${link}"> ${xhtml} </a>`
+ }
+ %> 
+       

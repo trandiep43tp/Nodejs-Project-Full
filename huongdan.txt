@@ -1,0 +1,105 @@
+Ctrl + k + 0 đóng hết lại
+Ctrl + k + j mở hết ra
+Ctrl + P tìm file
+
+router item là chuẩn nhất. các router khác có những chỗ chưa làm như: thông báo, modified chưa lưu tên 
+người chỉnh sửa  thì nên xem bên router item để xem thêm.
+
+cách truyền thông in user đăng nhập qua frontend thông qua middleware get-user-info
+
+Thiết lập ban đầu
+    . Vào thư mục để chứa source code. Vào trang web expressjs.com và vào express generator để xem hướng dẫn
+        Cách cài: npm install express-generator -g
+                  express --view=ejs myapp  trong đó ejs là template ejs, myapp là tên forder chứa source code
+                  cd vào thư mục vưà tạo
+                  npm start sẽ mở port 3000
+
+
+cai nodemon
+npm install --save-dev nodemon
+vào "scripts": {
+    "start": "node ./bin/www"
+  },  trong package.json sửa node thành nodemon
+
+khi mở các layout thì ta thấy có nhiều nội dung trùng nhau. dể tách các nôi dung trùng nhau thành 1 file 
+ta làm như sau:
+sử dụng ejs layout
+  npm install express-ejs-layouts
+    var expressLayouts = require('express-ejs-layouts');
+    app.use(expressLayouts);
+    app.set('layout', 'backend');
+    Sau khi đã tạo các câu lệnh trên đầy đủ ta tạo 1 file hiển thị chung( ở bài này là backend)
+    khi đó các view khác thì chỉ kéo phần nội đung vào thôi
+
+
+Cách sử dụng thư viện mongoose
+  https://mongoosejs.com
+
+  //tìm hiểu về mongoose
+	//định nghĩa 1 kiểu collection
+    //  var kittySchema = new mongoose.Schema({
+    //    name: String
+    //  });
+	//khai báo 1 đối tượng  'Kitten' là tên 1 đối tượng
+    //var Kitten = mongoose.model('Kitten', kittySchema);
+	// //tạo ra một hàng
+    // var silence = new Kitten({ name: 'nodejs' });
+	// //lưu vào dữ liệu
+    // silence.save(function (err, silence ) {
+    //   if (err) return console.error(err);
+    // });
+	 //tìm kiếm 
+	// Kitten.find(function (err, kittens) {
+	// 	if (err) return console.error(err);
+	// 	console.log(kittens);
+	//   })
+
+
+cách cài thông báo
+  tìm trên google: express notification tatim được : https://www.npmjs.com/package/express-flash-notification
+  cài đặt: npm i express-flash-notification --save
+  thêm các câu lệnh sau vào app:
+    const flash = require('express-flash-notification');
+    const cookieParser = require('cookie-parser');
+    const session = require('express-session');
+
+    có thể xem thêm phần cấu hình nâng cao: thay đổi tên flash, đặt vào thư mục khác
+
+cách validator dữ liệu
+tìm kiếm nodejs express validator ta dược trang: https://www.npmjs.com/package/express-validator
+
+cách định dạng thời gian
+sử dụng moment vào http://momentjs.com xem thêm
+    npm install moment
+
+Swer dụng passportjs để kiểm tra đăng nhập
+    http://www.passportjs.org/
+    install:  $ npm install passport
+              $ npm install passport-local
+                npm install md5
+    sau đó khai báo trong file app.js
+        const passport = require('passport')
+        app.use(passport.initialize())
+        app.use(passport.session());
+
+    thiết lập cấu hình cho router cần kiểm tra 
+        var passport      = require('passport')
+        var LocalStrategy = require('passport-local').Strategy;
+
+        passport.use(new LocalStrategy(
+            function(username, password, done) {
+                User.findOne({ username: username }, function (err, user) {
+                if (err) { return done(err); }
+                if (!user) {
+                    return done(null, false, { message: 'Incorrect username.' });
+                }
+                if (!user.validPassword(password)) {
+                    return done(null, false, { message: 'Incorrect password.' });
+                }
+                return done(null, user);
+                });
+            }
+        ));
+    Chú ý trong form phải đúng tên là username và password trong ô input 
+    khi sử dụng passport muốn hiển thị thông báo thì ta phải cài:
+        npm install connect-flash

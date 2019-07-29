@@ -1,0 +1,68 @@
+<h3><%=JSON.stringify(item) %></h3>
+ <!--đây là phần định nghĩa sử dụng cho toàn bộ-->
+ <%
+ const collection = 'category'; 
+ const linkPrefix = systemConfig.prefixAdmin + `/${collection}/`;
+%>
+
+<% include ../../helpers/formErrors %>
+
+<div class="row">
+    <div class="col-lg-12">
+    <div class="panel panel-default">
+    <div class="panel-heading">
+        Form 
+    </div> 
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-6">
+                 <%- formErrors(errors) %>                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <form role="form" action="<%=linkPrefix %>save" method="POST">                   
+                    <input class="form-control hidden" name="id" value="<%=item.id %>" >                    
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input class="form-control" name="name" id="name_slug" value="<%=item.name %>" >
+                    </div>
+                    <div class="form-group">
+                            <label>Slug</label>
+                            <input class="form-control" name="slug"  value="<%=item.slug %>" >
+                        </div>
+                    <div class="form-group">
+                        <label>Ordering</label>
+                        <input class="form-control" type="number" name="ordering" value="<%=item.ordering%>" >
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select name="status" class="form-control" >
+                            <option value="novalue">Choose Status</option>
+                            <option value="active" <%= (item.status == 'active') ? 'selected = "selected"': '' %> > Active</option>
+                            <option value="inactive" <%= (item.status == 'inactive') ? 'selected = "selected"': '' %> > Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>View Types</label>
+                        <select name="view" class="form-control" >
+                            <option value="novalue">Choose Status</option>
+                            <option value="list" <%= (item.view == 'list') ? 'selected = "selected"': '' %> > View List</option>
+                            <option value="thumb" <%= (item.view == 'thumb') ? 'selected = "selected"': '' %> > View Thumb</option>
+                        </select>
+                    </div>
+                     
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea class="form-control" name="content" rows="2"  id="content_ck123" ><%=item.content %></textarea>
+                    </div>                   
+                    <button type="submit" class="btn btn-primary">Submit </button>
+                    <a type="button" href="<%= linkPrefix %>all" class="btn btn-default">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div> 
+
+    <script>
+        CKEDITOR.replace( 'content_ck123' );
+    </script>

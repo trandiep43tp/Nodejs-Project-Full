@@ -1,0 +1,53 @@
+<% include  ../../helpers/format-date %>
+<% include  ../../helpers/format-summary %>
+
+<%
+const collection = 'article';
+//console.log(collection)
+const linkPrefix   = systemConfig.prefixAdmin + `/${collection}/`;
+const forderImage = '/uploads/article/';
+                        
+%> 
+<!-- <h3><%= JSON.stringify(itemsInCategory) %></h3> -->
+<div class="latest-post-wrap">
+    <h4 class="cat-title">Category</h4>
+    <% if(itemsInCategory.length > 0){ %>
+        <% itemsInCategory.forEach((item, index)=>{  %>  
+            <div class="single-latest-post row align-items-center">            
+                <div class="col-lg-5 post-left">
+                    <div class="feature-img relative">
+                        <div class="overlay overlay-bg"></div>
+                        <img class="img-fluid view_list" src="<%=forderImage + item.thumb %>" alt="">
+                    </div>
+                    <ul class="tags">
+                        <li><a href="#"><%- item.category.name %></a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-7 post-right">
+                    <a href="image-post.html">
+                        <h4><%- item.name %></h4>
+                    </a>
+                    <ul class="meta">
+                        <li><a href="#"><span class="lnr lnr-user"></span><%-item.created.user_name %></a></li>
+                        <li><a href="#"><span class="lnr lnr-calendar-full"></span><%=formatDateHelper(item.created.time) %></a></li>
+                        <li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
+                    </ul>
+                    <p class="excert">
+                            <%= formatSumaryHelper(item.content, 250) %>
+                    </p>
+                </div>          
+            </div>
+        <% }) %>
+        <div class="load-more">
+            <a href="#" class="primary-btn">Load More Posts</a>
+        </div>
+    <% }else{ %>
+        <div class="single-latest-post row align-items-center">
+            <h5>Không có bài nào</h5>
+        </div>
+    <% } %>
+    
+</div>
+
+
+

@@ -1,0 +1,34 @@
+
+<% include  ../helpers/format-date %>
+<% include  ../helpers/format-summary %>
+<!-- <h3><%= JSON.stringify(itemsRandom) %></h3> -->
+
+<%
+    const collection = 'article';
+    //console.log(collection)
+    const linkPrefix   = systemConfig.prefixAdmin + `/${collection}/`;
+    const forderImage = '/uploads/article/';
+                            
+%> 
+
+<% if(typeof itemsRandom !== 'undefined') { %>
+    <div class="single-sidebar-widget most-popular-widget">
+        <h6 class="title">Random Post</h6>
+        <% itemsRandom.forEach((item, index)=>{ %>            
+            <div class="single-list flex-row d-flex">
+                <div class="thumb">
+                    <img class="random_post" src="<%=forderImage + item.thumb %>" alt="">
+                </div>
+                <div class="details">
+                    <a href="/article/<%= item._id %>">
+                        <h6><%= item.name %></h6>
+                    </a>
+                    <ul class="meta">
+                        <li><a href="#"><span class="lnr lnr-calendar-full"></span><%=formatDateHelper(item.created.time) %></a></li>
+                        <li><a href="#"><span class="lnr lnr-bubble"></span>06</a></li>
+                    </ul>
+                </div>
+            </div>   
+        <% }) %>
+    </div>
+<% } %>

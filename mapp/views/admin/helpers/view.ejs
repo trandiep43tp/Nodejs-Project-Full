@@ -1,0 +1,15 @@
+<% 
+    viewHelper = (linkPrefix, id, view) =>{ 
+        let link = linkPrefix + 'change-view/'+ id +'/' + view;
+        
+        let xhtml = '';
+        if( view ==="list" ){
+            xhtml = '<span class="label label-success">List</span>';
+        }else if( view ==="thumb" ){
+            xhtml = '<span class="label label-warning">Thumb</span>';
+        }
+
+        return `<a href="${link}"> ${xhtml} </a>`
+ }
+ %>
+       

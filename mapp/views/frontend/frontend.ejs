@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+	<head>
+        <% include elements/head %>
+	</head>
+	<body>
+		<% include elements/header %>
+		
+		<div class="site-main-container">
+			<!-- Start top-post Area -->
+			<section class="top-post-area pt-10">
+				<% if(top_post === true){ %>
+					<% include elements/top_post %>						
+				<% } %>				
+			</section>
+			<!-- End top-post Area -->
+			
+			<!-- Start latest-post Area -->
+			<section class="latest-post-area pb-120">
+				<div class="container no-padding">
+					<div class="row">
+						<%- body %>
+						<div class="col-lg-4">
+							<div class="sidebars-area">
+								<% include elements/random_post %>
+								<% include elements/slidebar %>
+							</div>
+						</div>						
+					</div>
+				</div>
+			</section>
+			<!-- End latest-post Area -->
+		</div>
+		 
+		
+		<% include elements/footer %>		
+		<% include elements/scripts %>
+	</body>
+</html>
